@@ -1,16 +1,22 @@
-//RUTAS DE API
-//Se encarga de definir las rutas de la API y asociarlas con los controladores correspondientes.
+
 const express = require('express');
 const router = express.Router();
-const UsuarioControlador = require('../controlador/usuarioControlador');
 
+const CategoriasControlador = require('../controlador/categoriasControlador');
 
-//Ruta para obtener todos los usuarios
-router.get('/', UsuarioControlador.obtenerUsuarios);
-router.get('/:id', UsuarioControlador.obtenerUsuarioPorId);
+// Consultar todas las categorias
+router.get('/', CategoriasControlador.obtenerCategorias);
 
-router.post('/', UsuarioControlador.crear);
-router.put('/:id', UsuarioControlador.actualizar);
-router.delete('/:id', UsuarioControlador.eliminar); 
+// Consultar una categoria por ID
+router.get('/:id', CategoriasControlador.obtenerCategoriaPorId);
+
+// Crear una categoria
+router.post('/', CategoriasControlador.crearCategoria);
+
+// Actualizar una categoria
+router.put('/:id', CategoriasControlador.actualizarCategoria);
+
+// Eliminar una categoria
+router.delete('/:id', CategoriasControlador.eliminarCategoria);
 
 module.exports = router;

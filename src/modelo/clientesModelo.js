@@ -14,18 +14,18 @@ const clientesModelo = {
     return filas[0];
   },
 
-  crear: async ({ nombre, correo, telefono, direccion }) => {
+  crear: async ({ nombre, ciudad, fecha_registro }) => {
     const [resultado] = await pool.query(
-      'INSERT INTO clientes (nombre, correo, telefono, direccion) VALUES (?, ?, ?, ?)',
-      [nombre, correo, telefono, direccion]
+      'INSERT INTO clientes (nombre, ciudad, fecha_registro) VALUES (?, ?, ?)',
+      [nombre, ciudad, fecha_registro]
     );
     return resultado.insertId;
   },
 
-  actualizar: async (id, { nombre, correo, telefono, direccion }) => {
+  actualizar: async (id, { nombre, ciudad, fecha_registro }) => {
     const [resultado] = await pool.query(
-      'UPDATE clientes SET nombre = ?, correo = ?, telefono = ?, direccion = ? WHERE id_cliente = ?',
-      [nombre, correo, telefono, direccion, id]
+      'UPDATE clientes SET nombre = ?, ciudad = ?, fecha_registro = ? WHERE id_cliente = ?',
+      [nombre, ciudad, fecha_registro, id]
     );
     return resultado.affectedRows;
   },

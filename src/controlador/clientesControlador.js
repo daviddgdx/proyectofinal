@@ -25,11 +25,11 @@ const clientesControlador = {
 
   crear: async (req, res) => {
     try {
-      const { nombre, correo, telefono, direccion } = req.body;
+      const { nombre, ciudad, fecha_registro } = req.body;
       if (!nombre) {
         return res.status(400).json({ exito: false, mensaje: 'El nombre es obligatorio' });
       }
-      const id = await clientesModelo.crear({ nombre, correo, telefono, direccion });
+      const id = await clientesModelo.crear({ nombre, ciudad, fecha_registro });
       res.status(201).json({ exito: true, mensaje: 'Cliente creado', id });
     } catch (error) {
       res.status(500).json({ exito: false, mensaje: 'Error al crear cliente', error: error.message });
@@ -39,11 +39,11 @@ const clientesControlador = {
   actualizar: async (req, res) => {
     try {
       const { id } = req.params;
-      const { nombre, correo, telefono, direccion } = req.body;
+      const { nombre, ciudad, fecha_registro } = req.body;
       if (!nombre) {
         return res.status(400).json({ exito: false, mensaje: 'El nombre es obligatorio' });
       }
-      const filas = await clientesModelo.actualizar(id, { nombre, correo, telefono, direccion });
+      const filas = await clientesModelo.actualizar(id, { nombre, ciudad, fecha_registro });
       if (filas === 0) {
         return res.status(404).json({ exito: false, mensaje: 'Cliente no encontrado' });
       }

@@ -1,34 +1,42 @@
-const pool = require('../config/bd');
+const db = require('../config/bd');
 
 class CategoriasModelo {
-    static async obtenerTodos() {
-        const [rows] = await pool.query('SELECT * FROM categorias');
-        return rows;
-    }
+  static async obtenerTodas() {
+    const [filas] = await db.query('SELECT id_categoria, nombre FROM categorias');
+    return filas;
+  }
 
-    static async obtenerPorId(id) {
-        const [rows] = await pool.query('SELECT * FROM categorias WHERE id_categoria = ?', [id]);
-        return rows[0];
-    }
+  static async obtenerPorId(id) {
+    const [filas] = await db.query(
+      'SELECT id_categoria, nombre FROM categorias WHERE id_categoria = ?',
+      [id]
+    );
+    return filas[0] || null;
+  }
 
-    static async crearCategoria(nombre) {
-        const [result] = await pool.query('INSERT INTO categorias (nombre) VALUES (?)', [nombre]);
-        return { id_categoria: result.insertId, nombre };
-    }
+  static async crear(nombre) {
+    const [resultado] = await db.query(
+      'INSERT INTO categorias (nombre) VALUES (?)',
+      [nombre]
+    );
+    return { id_categoria: resultado.insertId, nombre };
+  }
 
-    static async actualizarCategoria(id, campo, valor) {
-        const camposPermitidos = ['nombre', 'descripcion'];
-        if (!camposPermitidos.includes(campo)) {
-            throw new Error('Campo no permitido para actualizar');
-        }
-        await pool.query(`UPDATE categorias SET ${campo} = ? WHERE id_categoria = ?`, [valor, id]);
-        return { id_categoria: id, [campo]: valor };
-    }
+  static async actualizar(id, nombre) {
+    const [resultado] = await db.query(
+      'UPDATE categorias SET nombre = ? WHERE id_categoria = ?',
+      [nombre, id]
+    );
+    return resultado.affectedRows > 0;
+  }
 
-    static async eliminarCategoria(id) {
-        await pool.query('DELETE FROM categorias WHERE id_categoria = ?', [id]);
-        return { id_categoria: id };
-    }
+  static async eliminar(id) {
+    const [resultado] = await db.query(
+      'DELETE FROM categorias WHERE id_categoria = ?',
+      [id]
+    );
+    return resultado.affectedRows > 0;
+  }
 }
 
 module.exports = CategoriasModelo;
